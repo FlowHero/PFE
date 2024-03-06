@@ -9,16 +9,19 @@ each *fortigate* or *router* will act as a *vpn gateway* for his LAN.
 
 Objective: Provide security services for IP packets, including encryption, authentication, protection against replay, and data confidentiality.
 Protocols: Encapsulating Security Payload (ESP) and Authentication Header (AH).
+
 **2. IPSec Modes - Tunnel vs. Transport:**
 
 Tunnel Mode: Default mode where the entire original IP packet is protected by IPSec. Used between gateways or end-station to gateway.
 Transport Mode: Used for end-to-end communications, protecting the IP payload. Common for client-server or workstation-gateway communication.
+
 **3. IPSec Tunnel Mode:**
 
 Function: Wraps, encrypts, and adds a new IP header to the original packet.
 Use Cases: Between secure IPSec Gateways (e.g., Cisco routers) or VPN clients and gateways.
 Header Placement: IPSec header (AH or ESP) inserted between the IP header and upper layer protocol.
 Illustration: Packet diagrams provided for both ESP and AH headers in Tunnel mode.
+
 **4. IPSec Transport Mode:**
 
 Function: Protects the IP payload in end-to-end communication.
@@ -31,6 +34,7 @@ Illustration: Packet diagrams for both ESP and AH headers in Transport mode.
 Tunnel Mode: ESP commonly used; AH may be used alone or with ESP.
 Transport Mode: ESP commonly used; AH may be used alone or with ESP.
 Header Identification: ESP identified with IP protocol ID 50, AH with ID 51.
+
 **6. Conclusion:**
 
 Choice of Mode: Depends on specific requirements and implementation of IPSec.
