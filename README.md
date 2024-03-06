@@ -13,7 +13,7 @@ Protocols: Encapsulating Security Payload (ESP) and Authentication Header (AH).
 
 Tunnel Mode: Default mode where the entire original IP packet is protected by IPSec. Used between gateways or end-station to gateway.
 Transport Mode: Used for end-to-end communications, protecting the IP payload. Common for client-server or workstation-gateway communication.
-3. IPSec Tunnel Mode:
+`3. IPSec Tunnel Mode:`
 
 Function: Wraps, encrypts, and adds a new IP header to the original packet.
 Use Cases: Between secure IPSec Gateways (e.g., Cisco routers) or VPN clients and gateways.
