@@ -5,6 +5,11 @@ https://www.firewall.cx/networking/network-protocols/ipsec-modes.html
 
 each *fortigate* or *router* will act as a *vpn gateway* for his LAN.
 
+> **Tunneling** 
+is a network technology that enables the 
+encapsulation of one type of protocol packet within 
+the datagram of a different protocol.
+
 **1. Introduction to IPSec:**
 
 Objective: Provide security services for IP packets, including encryption, authentication, protection against replay, and data confidentiality.
