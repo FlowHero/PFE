@@ -9,7 +9,7 @@ each *fortigate* or *router* will act as a *vpn gateway* for his LAN.
 
 Objective: Provide security services for IP packets, including encryption, authentication, protection against replay, and data confidentiality.
 Protocols: Encapsulating Security Payload (ESP) and Authentication Header (AH).
-2. IPSec Modes - Tunnel vs. Transport:
+**2. IPSec Modes - Tunnel vs. Transport:**
 
 Tunnel Mode: Default mode where the entire original IP packet is protected by IPSec. Used between gateways or end-station to gateway.
 Transport Mode: Used for end-to-end communications, protecting the IP payload. Common for client-server or workstation-gateway communication.
