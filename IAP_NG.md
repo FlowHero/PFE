@@ -2,7 +2,7 @@
 
 ## Goals de NG-IAP:
 
-### Goals principales:
+### Objectives principales du design:
 - Remplacage des hardwares **EoL** ou/et **Non-Compliant**
 - **Standarisation** d'infrastucture IAP
 - **Secure Browsing** securisation du browsing d'internet pour aligner avec les normes de conformité de *Darwin2 security* (
@@ -12,20 +12,25 @@
   DLP Inspections
 )
 
->Darwin2 initiatives require deciphering browsing traffic to 
-perform security inspections, such as antivirus, anti-malware and DLP.
+>Darwin-2 initiatives require deciphering browsing traffic to perform security inspections, such as antivirus, anti-malware and DLP.
 
-### Autres:
+### Autres objectives:
 
 - **Remote Access**
 - **Cloud Access**
-
 
 - Virtualization d'une partie d'IAP pour:
   Simplifier le logistique, MCO, energie et cout.
 
 - Utilisation de Cisco ENCS pour:
-  préparer pour le future dans levolution d'infrastructure
+  - préparer pour le future dans levolution d'infrastructure
+  - réduire les efforts de management(design, deploy, management des services réseaux à partir d'une seul interface(Cisco Enterprise
+NFVIS GUI))
+- Réduire les couts
+  - Reduce physical hosting space (1 Rack Unit)
+  - Reduce power and cooling consumption
+
+
 
 ## GTS IAP Architecture:
 
@@ -39,9 +44,8 @@ le browsing dans SG est établie d'une maniere purement professionel pour garant
 
 ## Solution Overview
 
-• Upper filtering and Admin layer will rely on physical hardware
-• Cisco ENCS technology will be introduced to virtualize lower filtering and services layer.
+- Upper filtering and Admin layer will rely on physical hardware
+- Cisco ENCS technology will be introduced to virtualize lower filtering and services layer.
 
-| aze | azea|
-| | |
-|yes | no|
+(Group requirement is to have Upper and Lower Firewalls on different hardware, that’s why we can’t
+mutualize.)
