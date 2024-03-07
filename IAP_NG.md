@@ -49,3 +49,9 @@ le browsing dans SG est établie d'une maniere purement professionel pour garant
 
 (Group requirement is to have Upper and Lower Firewalls on different hardware, that’s why we can’t
 mutualize.)
+
+### Silo VPN & Remote Access
+
+### Silo Partners
+VPN Ipsec between the partner and the VPN Services on the ENCS. All flow coming from partners will transit by a specific firewall to restrict the access to internal server by the partners. Physical Netscaler will permut to have protocol break between the two lines of firewalls.
+### Silo Browsing & O365
