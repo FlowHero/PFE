@@ -49,6 +49,7 @@ Application: Tunnel mode for secure gateways, transport mode for end-to-end comm
 This summary organizes key information from the provided article, distinguishing between IPSec Tunnel Mode and IPSec Transport Mode, and highlighting the role of ESP and AH in different scenarios.
 
 ## IKEv1
+
 ## IKEv2
 - Pre-shared keys are not used in encripting IKEv2 - only DH values are used
 - Nuilt-in NAT-T support
@@ -58,6 +59,10 @@ This summary organizes key information from the provided article, distinguishing
 All IKE communications consist of pairs of messages: a request and a response. The pair is called an “exchange“. The goal is to build a *secured tunnel* – Security Association (SA) for IPSec management traffic (**IKE SA**) and then be able to build *tunnels for data traffic* (**Child SA**).
 
 Communication using IKE always begins with *IKE_SA_INIT* and *IKE_AUTH* exchanges. These initial exchanges normally consist of four messages, though in some scenarios that number can grow
+
+### NAT-T
+In most cases, the IPSec device is also the gateway for your LAN, so there is probably a NAT configuration. Traffic is checked for NAT before it is checked for IPSec [NAT Order of Operation], so make sure that traffic that should be forwarded with IPSec is not NATted for outside world.
+
 
 ### IKE_SA_INIT
 
@@ -96,9 +101,12 @@ Parts of *IKE_AUTH* messages are **encrypted** and **integrity** protected with 
     and all fields in all *messages are authenticated*. 
 
 IKE_AUTH messages:
-– authenticate the previous messages
-– exchange identities and/or certificates
-– and establish the first CHILD_SA (IPSec SA for data traffic) based on SA proposals and Traffic Selectors included
+-  authenticate the previous messages
+-  exchange identities and/or certificates
+-  and establish the first CHILD_SA (IPSec SA for data traffic) based on SA proposals and Traffic Selectors included
+
+Traffic Selectors identify traffic that is a subject to be forwarded via IPSec tunnel (Source and Destination addresses/subnets, protocol and port numbers)
+
 
 
 ## IKEv1 vs IKEv2
