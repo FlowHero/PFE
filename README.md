@@ -89,7 +89,7 @@ NAT is detected by including a hash of (ip and port numbers), if received hash d
 
 ### IKE_AUTH
 
-[ike_auth](images/ike.draw_io-ikev2.ike_auth.jpg)
+[ike_auth](./images/ike.draw_io-ikev2.ike_auth.jpg)
 
 Parts of *IKE_AUTH* messages are **encrypted** and **integrity** protected with keys established through the *IKE_SA_INIT* exchange
     so *identities are hidden* from eavedroppers
