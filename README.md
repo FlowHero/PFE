@@ -50,13 +50,69 @@ This summary organizes key information from the provided article, distinguishing
 
 ## IKEv1
 ## IKEv2
-## IKEv1 vs IKEv2
-## Phase 1 
-## Phase 2 
 - Pre-shared keys are not used in encripting IKEv2 - only DH values are used
 - Nuilt-in NAT-T support
 - EAP support for authentication
 - allow flexible auth choices (asymetrical)
+
+All IKE communications consist of pairs of messages: a request and a response. The pair is called an “exchange“. The goal is to build a *secured tunnel* – Security Association (SA) for IPSec management traffic (**IKE SA**) and then be able to build *tunnels for data traffic* (**Child SA**).
+
+Communication using IKE always begins with *IKE_SA_INIT* and *IKE_AUTH* exchanges. These initial exchanges normally consist of four messages, though in some scenarios that number can grow
+
+### IKE_SA_INIT
+
+the first pair of messages:
+    - negociate cyprographic algorithms 
+    - provide NAT detection
+    - exchange nonces
+    - do DH Exchange
+
+[ike_init](images/ike.draw_io-ikev2.ike_sa_init.jpg)
+
+Security Parameter Index (SPI) is a 64-bit identifier, a pair of SPIs uniquely identifies the IKEv2 session.
+
+the initiator send a list of Security Attributes that can be used for the IKE SA - Proposals (SAi1)
+- Encryption algorithms
+- PRF - hash algorithm
+- DH group
+- Integrity Algorithm
+
+the responder picks the one that is compliant with logically configured attributes (SAr1).
+if the responder decline the DH group and want another, an additional exchange will be done.
+
+SKEYSEED is calculated during this IKE_SA_INIT exchange using the nonces, and DH shared secret is established during that exchange  
+unlike IKEv1, IKEv2 does not use pre-shared key for IKEv2 SA.
+
+NAT is detected by including a hash of (ip and port numbers), if received hash does not match hash of the one locally calculated then there is a NAT device. 
+    Once NAT is detected, all further communication (IKE_AUTH and ESP payload) switches from UDP port 500 to UP port 4500 
+
+
+### IKE_AUTH
+
+[ike_auth](images/ike.draw_io-ikev2.ike_auth.jpg)
+
+Parts of *IKE_AUTH* messages are **encrypted** and **integrity** protected with keys established through the *IKE_SA_INIT* exchange
+    so *identities are hidden* from eavedroppers
+    and all fields in all *messages are authenticated*. 
+
+IKE_AUTH messages:
+– authenticate the previous messages
+– exchange identities and/or certificates
+– and establish the first CHILD_SA (IPSec SA for data traffic) based on SA proposals and Traffic Selectors included
+
+
+## IKEv1 vs IKEv2
+
+- IKEv1 does authentication and encryption in 2 distinctive phases(phase 1 & 2), 
+    each phase consist of predefined number of message exchanges  
+- IKEv2 does not have same distinction
+     IKEv2 defines message exchanges but does not limits the number of messages in them.
+
+- unlike IKEv1, IKEv2 does not use pre-shared key for IKEv2 SA.
+
+## Phase 1 
+## Phase 2 
+
 
 
 ---
@@ -79,5 +135,5 @@ you must configure 2 policies,
 
 - use 2 ISP on your site and deploy 2 IPSec VPNs, if the primary IPSec fails, the other can be used
 
-![Alt text](image.png) 
+![Alt text](images/image.png) 
 
