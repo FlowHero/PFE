@@ -67,7 +67,7 @@ the first pair of messages:
     - exchange nonces
     - do DH Exchange
 
-[ike_init](images/ike.draw_io-ikev2.ike_sa_init.jpg)
+![ike_init](images/ike.draw_io-ikev2.ike_sa_init.jpg)
 
 Security Parameter Index (SPI) is a 64-bit identifier, a pair of SPIs uniquely identifies the IKEv2 session.
 
@@ -89,7 +89,7 @@ NAT is detected by including a hash of (ip and port numbers), if received hash d
 
 ### IKE_AUTH
 
-[ikeauth](./images/ike.draw_io-ikev2.ike_auth.jpg)
+![ikeauth](./images/ike.draw_io-ikev2.ike_auth.jpg)
 
 Parts of *IKE_AUTH* messages are **encrypted** and **integrity** protected with keys established through the *IKE_SA_INIT* exchange
     so *identities are hidden* from eavedroppers
