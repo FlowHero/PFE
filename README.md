@@ -164,7 +164,25 @@ The primary goal of Phase 1 is to delay an attacker long enough to execute Phase
 
 ## Phase 2 
 
+In Phase 2, IKE negotiates IPSec's Phase 2 SA parameters and sets up matching IPSec SAs in the peers (one for outbound communications and one for inbound). At the end of Phase 2, both peers hold a symmetric shared key for IPsec.
 
+IKEv2 Phase 2's roles and responsibilities are:
+
+Creates two (2) uni-directional tunnels used for end-user packets encryption/decryption
+Negotiate IPsec security protocols
+ESP and/or AH
+Hash algorithm (SHA)
+Encryption algorithm (if required)
+IKEv2 Phase 2 and PFS
+If PFS (Perfect Forward Secrecy) is not utilized, in Phase 2 IKE re-uses the same cryptographic key agreement used in Phase 1. When PFS is selected, a new symmetric key is generated at the beginning of Phase 2.
+
+IKE and IPsec Security Associations
+Right about now you may be pondering if the 2-phase Security Association process for IPsec and the 2-phase IKE SA processes are related. Yes, they are. IPsec and IKE's SA processes are intertwined. IKE also uses SAs, and IPsec relies on IKE to initiate IPsec's SA Phase Two process. Their order of operation looks like this:
+
+- IPsec SA Phase 1 negotiation
+- IKE SA Phase 1 negotiation
+- IKE SA Phase 2 negotiation
+- IPsec SA Phase 2 negotiation
 
 ---
 
