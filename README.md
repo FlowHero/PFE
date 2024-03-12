@@ -2,6 +2,8 @@
 
 
 https://www.firewall.cx/networking/network-protocols/ipsec-modes.html
+https://datahacker.blog/industry/technology-menu/networking/vpn
+
 
 each *fortigate* or *router* will act as a *vpn gateway* for his LAN.
 
