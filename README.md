@@ -1,4 +1,4 @@
-# PFE
+# VPNs
 
 
 https://www.firewall.cx/networking/network-protocols/ipsec-modes.html
@@ -51,6 +51,10 @@ This summary organizes key information from the provided article, distinguishing
 ## IKEv1
 
 ## IKEv2
+
+>Goal: Securely share a symetric key between 2 network peers who want to communicate via an IPSec VPN
+>it does it in 2 phases 
+
 - Pre-shared keys are not used in encripting IKEv2 - only DH values are used
 - Nuilt-in NAT-T support
 - EAP support for authentication
@@ -61,8 +65,19 @@ All IKE communications consist of pairs of messages: a request and a response. T
 Communication using IKE always begins with *IKE_SA_INIT* and *IKE_AUTH* exchanges. These initial exchanges normally consist of four messages, though in some scenarios that number can grow
 
 ### NAT-T
+
+Why use NAT-T ?
+    - because ESP protocol port number is 50 and doesn't support port address translation 
+    - NAT-T allows IKEv2 to work through NAT devices by encapsulating IKEv2 traffic within UDP packets. This encapsulation helps maintain consistent IP addresses within the VPN packets, making it possible for the VPN connection to traverse NAT boundaries.
+
+The detection of NAT-T is based on the NAT_DETECTION_SOURCE_IP and NAT_DETECTION_DESTINATION_IP notifications sent in the `IKE_SA_INIT` exchange that contain source and destination IP address hashes, respectively.
+
 In most cases, the IPSec device is also the gateway for your LAN, so there is probably a NAT configuration. Traffic is checked for NAT before it is checked for IPSec [NAT Order of Operation], so make sure that traffic that should be forwarded with IPSec is not NATted for outside world.
 
+Not all VPNs support NAT across the VPN. When they do, it's a feature called NAT-T
+
+single device to internet via VPN : no worries
+connect 2 networks together : pay attention to NAT-T 
 
 ### IKE_SA_INIT
 
@@ -119,6 +134,34 @@ Traffic Selectors identify traffic that is a subject to be forwarded via IPSec t
 - unlike IKEv1, IKEv2 does not use pre-shared key for IKEv2 SA.
 
 ## Phase 1 
+Phase 1 is a negotiation process that establishes a secure, authenticated IKEv2 Security Association (IKEv2 SA) between two (2) network peers. 
+Phase 1 manages the **authentication** of both network peers and establishes an agreement on which **encryption methods** will be used for Phase 2. A separate security policy (in the form of an IKEv2 SA) is implemented for each IKEv2 peer. Normally, there are only two (2) peers.
+
+Phase 1 uses **X.509 certificates for *authentication*** and **Diffie-Hellman key exchanges for *encryption***. The X.509 certificates must be either arranged ahead of time (pre-shared) or may be exchanged via DNS or DNSSEC.
+
+Phase 1 defines:
+
+- Global parameters, such as the names of public key certificates
+- Whether perfect forward secrecy (PFS) is to be used
+- Network interfaces affected
+- Security protocols and their algorithms
+- Authentication method
+
+Phase 1 has two (2) different implementation methods. "Main Mode" is the default configuration and uses cryptographic keys to protect the transmission between the two (2) network peers. "Aggressive Mode" is optional, and sacrifices security for speed. The latter should never be used across the Internet.
+
+**Main Mode**:
+    IKEv2 Phase 1 Main Mode (default) uses PKI-based keys to authenticate both network peers.
+
+**Aggressive Mode**:
+    The sanctity of the IKEv2 Phase 2 cryptographic keys is critical in preventing a cascade effect of key compromises.
+
+>IKEv2 Phase 1 should not be run in Aggressive Mode over an insecure network, such as the Internet.
+
+IKEv2 Phase 1 Aggressive Mode is faster than the default Main Mode, but transmits all information in the clear (plain text) with no authentication protection. Aggressive Mode should be avoided when possible as it is particularly vulnerable to Man-in-the-Middle (MitM) attacks, providing an attacker with the opportunity to alter the security association parameters for Phase 2. For example, allowing an attacker the opportunity to force a lower-level encryption method that is substantially easier to break.
+
+>IKEv2's design presumes operation in a hostile environment where it is vulnerable to Man-in-the-Middle (MitM) and similar attack vectors.
+The primary goal of Phase 1 is to delay an attacker long enough to execute Phase 2.4
+
 ## Phase 2 
 
 
