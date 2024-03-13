@@ -38,6 +38,9 @@ Use Cases: Encrypted sessions, e.g., Telnet or Remote Desktop, between a client 
 Header Placement: IPSec headers encapsulate the IP payload; original IP headers remain intact.
 Illustration: Packet diagrams for both ESP and AH headers in Transport mode.
 
+
+### ESP vs AH:
+
 **5. ESP vs. AH in Tunnel and Transport Modes:**
 
 Tunnel Mode: ESP commonly used; AH may be used alone or with ESP.
