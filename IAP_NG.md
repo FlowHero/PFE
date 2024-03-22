@@ -33,13 +33,13 @@ NFVIS GUI))
 
 ## GTS IAP Architecture:
 
-- SG possède plusieurs IAP pour différents besoins, qui sont tous conformes avec standard de sécurité (ANSSI)pour éviter une *compromise* 
+- XX possède plusieurs IAP pour différents besoins, qui sont tous conformes avec standard de sécurité (ANSSI)pour éviter une *compromise* 
 - y a des *IAP de hosting* qui permet au utilisateurs externes d'acceder au applications et ressources internes
 - y a des *IAP Hybrid* qui permet d'avoir un flux entrant et sortant, utilisé par les SSL VPN et la partie Browsing
 
 ### Browsing
 
-le browsing dans SG est établie d'une maniere purement professionel pour garantire la sécurité des SI et des utilisateurs
+le browsing dans XX est établie d'une maniere purement professionel pour garantire la sécurité des SI et des utilisateurs
 
 ## Solution Overview
 
@@ -141,7 +141,29 @@ create VLANS: 1,100,110,111,800,810,811,820,830,831,840,850,860,880,890,900,910,
 
 ENCS does not support PVST because it blocks ports when using back-to-back connections, this will result in blocking traffic between VNFs and thus VNFs traffic will not work.
 
+### - Checkpoint 
 
 
-### - Checkpoint 6200
-### - Checkpoint SMS
+Dynamic routing should not be configured on firewalls. 
+You should use static routing to route packet to their destination. 
+Static route for Proxy (Check point updates through proxy) 
+
+All Security Gateways, Security Management Servers and cluster members must synchronize 
+their system clocks. This is important for these reasons: 
+-  SIC (Secure Internal Communication) trust can fail if devices are not synchronized 
+correctly. 
+- Cluster synchronization requires precise clock synchronization between members. 
+- To make sure that cron/scheduled jobs run at the correct time. 
+-  To do certificate validation for applications based on the correct time.
+
+>IAP Admin should contain a NTP Server that can be used to synchronize the clock of all IAP 
+components. 
+
+Check point products needs to connect to Internet to receives updates. 
+Direct Internet Access is prohibited. 
+It is recommended to use proxy with limited access.
+To configure the proxy: 
+- In the System Management section select Proxy 
+- Enable Use a Proxy Server 
+- Enter the proxy IP address and the port 
+- Click Apply 

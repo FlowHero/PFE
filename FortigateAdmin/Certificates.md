@@ -83,3 +83,46 @@ Download `Fortinet_CA_SSL` from fortigate first, then import it on your devices 
 
 > 📌 Certificate for SSL Inspection
 
+you can exempt microsoft exchange server addresses from ssl inspection. While delete the error, you are no longer performing SSL Inspection on email traffic
+
+#### Invalid certificates
+
+you can select a custom action on each type of invalid certificates as shown below:
+
+![crtinv](./images/Annotation%202024-03-22%20093757.png)
+
+Fortigate will then present the certificate as either **trusted** (signed by `Fortinet_CA_SSL` ) or **untrusted** (signed by `Fortinet_CA_Untrusted` ),
+
+- Untrusted certificates includes self-signed certificates unless the certificate is imported into the browser certificate store.
+
+![bai](./images/Annotation%202024-03-22%20094908.png)
+
+- Allow:
+    - if *untrusted*, Fortigate signs the certificate using `Fortinet_CA_Untrusted` and sends the temporary certificate to the browser and a warning will appear to the user indicating that the site is untrusted.
+    -  Otherwise if the certificate is *trusted*, it is signed by `Fortinet_CA_SSL` and send the temporary certificate to the browser
+
+- Ignore:
+    - Trusted or Untrusted; it is signed by  `Fortinet_CA_SSL` and temporary cert is sent to the browser
+
+### HSTS
+
+is a security feature designed to detect MITM Attacks by mking sure that any certificate presented when accessing a server resource is signed by a specific CA
+
+if the browser detects any other CA, it simply refuses to continue the SSL Handshake, and prevent access to the website 
+
+![hsts](./images/Annotation%202024-03-22%20100433.png)
+
+When replacing certificate for traffic causes problems and prevent users fro maccessing some websites, solutions are limited:
+
+![deepexempt](./images/Annotation%202024-03-22%20101117.png)
+
+
+#### Solution 1
+
+- Fortigate level: Exempt affected traffic from full SSL inspection and use certificate inspection instead
+
+
+#### Solution 2
+
+- Browser level: disable HSTS validation per website or globally  
+
