@@ -68,3 +68,62 @@ If encrypted protocols, fortigate requires additional inspection.
 when using ssl certificate inspection, Fortigate doesn't decrypt or inspect any encrypted traffic, it just exxtract SNI or CN from the SSL handshakes (because they are not encrypted) and try to rate the site using the domain extracted.
 
 but sometimes SNI is not same as CN field (example of youtube and google)
+
+- **Server SNI Check**
+    - `Enable`: Fortigate **Uses** the domain in CN field instead of that in SNI field if domain(CN)#domain(SNI) and domain(SAN)
+    - `Strict`: Fortigate **Closes** Connection if there's a mismatch
+    - `Disable`: Fortigate always rate url based on FQDN
+
+
+![xaeaz](./images/Annotation%202024-03-27%20093838.png)
+
+### FortiGuard web Filter
+
+![xaez](./images/Annotation%202024-03-27%20094907.png)
+
+FortiGuard looks at category that website has been rated with and take action based on that category.
+
+- **Monitor**: Allow access to site and logs it at same time
+- **Warning**: You choose to access or go back
+- **Authenticate**:
+    - Blocks requested website unless you entered the right login credentials
+
+    - choosing this action allow you to define user groups tat are allowed to override the block 
+
+if you feel a url doesn't have the right category, you can override it
+
+
+Static URL Filtering
+![azesx](./images/Annotation%202024-03-27%20100042.png)
+
+Exempt: allow traffic from trusted sources to bypass all security inspections.
+
+![azesq](./images/Annotation%202024-03-27%20101018.png)
+
+for each step, if there's no match, fortigate moves to the next step enabled.
+Advanced Filters = Safe Search or remove active X components
+
+Category based filtering requires a live connection to FortiGuard  
+
+you can enable **Web Filter Cache** on fortiGate for fortiguard so that the rating of a url that is already known, doesn't have to send a rating request but just perform a memory lookup, which is fatser than packets travelling.
+
+![XGZER](./images/Annotation%202024-03-27%20102147.png)
+
+## IPS
+To get maximum IPS features, combine IPS with deep ssl inspection
+
+## Application Control
+
+when you want to block torrents, for example. Because they use dynamic ports and `P2P` traffic, it's extremely difficult to block with a regular firewall rule. This is where **application control** comes in. It uses the IPS engine to inspect the traffic and block it.
+
+you can instead of blocking all facebook in web filtering, block just Facebook App while allowing Facebook chat for collaboration.
+
+**Application control** provides more flexibility in controlling access to web-based or other applications than "simple" **web filtering** can.
+
+
+> Application control occurs after the web filtering so that web filtering exempt cannot bypass app control.
+### Flow-Based web filtering
+
+
+### Proxy-Based web filtering 
+
